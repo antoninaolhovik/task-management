@@ -11,11 +11,7 @@ import java.util.Optional;
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
-
     private ProjectRepository projectRepository;
-
-    public ProjectServiceImpl() {
-    }
 
     @Autowired
     public ProjectServiceImpl(ProjectRepository projectRepository) {
@@ -32,11 +28,5 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.save(project);
     }
 
-    public ProjectRepository getProjectRepository() {
-        return projectRepository;
-    }
 
-    public void setProjectRepository(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
-    }
 }
