@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
 public class Project {
 
     private Long id;
@@ -14,8 +14,6 @@ public class Project {
     private String name;
 
     private LocalDate createdDate;
-
-    private String internalId;
 
     public Project(Project project) {
         this(project.getId(), project.getName(), project.getCreatedDate());

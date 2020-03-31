@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Profile("dev")
-public class ProjectRepositoryImpl implements ProjectRepository {
+@Profile("test")
+public class ProjectRepositoryDbImpl implements ProjectRepository {
 
     private List<Project> projects = new ArrayList<>();
 
-    public ProjectRepositoryImpl() {
+    public ProjectRepositoryDbImpl() {
         super();
     }
 
@@ -35,5 +35,4 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
         return project;
     }
-
 }
