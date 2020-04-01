@@ -1,19 +1,17 @@
 package com.amakedon.taskmanagement.service.impl;
 
+import com.amakedon.taskmanagement.TestConfig;
 import com.amakedon.taskmanagement.persistence.model.Project;
 import com.amakedon.taskmanagement.service.ProjectService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringJUnitConfig(ProjectServiceImplTest.Config.class)
+@SpringJUnitConfig(TestConfig.class)
 class ProjectServiceImplTest {
 
     @Autowired
@@ -25,9 +23,5 @@ class ProjectServiceImplTest {
         assertNotNull(savedProject);
     }
 
-
-    @Configuration
-    @ComponentScan("com.amakedon.taskmanagement")
-    static class Config {}
 
 }
