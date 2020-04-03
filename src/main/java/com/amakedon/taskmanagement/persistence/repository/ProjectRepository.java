@@ -1,13 +1,18 @@
 package com.amakedon.taskmanagement.persistence.repository;
 
 import com.amakedon.taskmanagement.persistence.model.Project;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
-public interface ProjectRepository {
+@Repository
+public interface ProjectRepository extends CrudRepository<Project, Long> {
 
-    Optional<Project> findById(Long id);
+    Optional<Project> findByName(String name);
 
-    Project save(Project project);
+    List<Project> findByCreatedDateBetween(LocalDate start, LocalDate end);
+
 }
