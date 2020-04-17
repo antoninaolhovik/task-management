@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping(value = "/projects")
 public class ProjectController {
 
-    private final ProjectService projectService;
+    private ProjectService projectService;
 
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
