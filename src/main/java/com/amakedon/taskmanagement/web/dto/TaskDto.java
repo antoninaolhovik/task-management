@@ -5,6 +5,7 @@ import com.amakedon.taskmanagement.persistence.model.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -19,11 +20,13 @@ public class TaskDto {
 
     private String description;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dateCreated;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dueDate;
 
-    private TaskStatus status;
+    private TaskStatus status = TaskStatus.TO_DO;
 
     public TaskDto(String name, String description, LocalDate dateCreated, LocalDate dueDate) {
         this.name = name;

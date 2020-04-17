@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+<head>
+    <title>Add Task</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+    <body>
+        <h2>
+            Add New Tasks to Project <span th:text="${project.name}">Name</span>
+        </h2>
+
+        <form th:action="@{/projects/{id}/save-task(id=${project.id})}"
+              th:object="${task}" method="post">
+
+            <div class="form-group row">
+                <label for="name">Name</label> <input type="text" id="name" th:field="*{name}"/>
+                <label for="dueDate">Due Date</label> <input type="date" id="dueDate" th:field="*{dueDate}" />
+
+                <input type="submit" value="Save" class="btn btn-primary ml-2"/>
+            </div>
+
+        </form>
+
+    </body>
+</html>

@@ -1,5 +1,6 @@
 package com.amakedon.taskmanagement.persistence.model;
 
+import com.amakedon.taskmanagement.web.dto.TaskDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,5 +34,14 @@ public class Task {
         this.description = description;
         this.dateCreated = dateCreated;
         this.dueDate = dueDate;
+    }
+
+    public Task(TaskDto taskDto) {
+        this.id = taskDto.getId();
+        this.name = taskDto.getName();
+        this.description = taskDto.getDescription();
+        this.dateCreated = taskDto.getDateCreated();
+        this.dueDate = taskDto.getDueDate();
+        this.status = taskDto.getStatus();
     }
 }

@@ -1,8 +1,11 @@
 package com.amakedon.taskmanagement.web.controller;
 
 import com.amakedon.taskmanagement.persistence.model.Project;
+import com.amakedon.taskmanagement.persistence.model.Task;
 import com.amakedon.taskmanagement.service.ProjectService;
 import com.amakedon.taskmanagement.web.dto.ProjectDto;
+import com.amakedon.taskmanagement.web.dto.TaskDto;
+import com.amakedon.taskmanagement.web.dto.TaskListDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +41,14 @@ public class ProjectController {
         return "new-project";
     }
 
+    @GetMapping("/{id}")
+    public String getProject(@PathVariable Long id, Model model) {
+        Project project = projectService.findById(id)
+                .get();
+        model.addAttribute("project", convertToDto(project));
+        return "project";
+    }
+
     @PostMapping
     public String addProject(@Valid @ModelAttribute("project") ProjectDto projectDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -48,31 +59,27 @@ public class ProjectController {
     }
 
 
-/*    @GetMapping("/{id}/add-tasks")
+   @GetMapping("/{id}/add-tasks")
     public String getProjectEditPage(@PathVariable Long id, Model model) {
         Project project = projectService.findById(id)
                 .orElse(new Project());
         model.addAttribute("project", project);
-        TaskListDto tasksForm = new TaskListDto();
-        for (int i = 1; i <= 3; i++) {
-            tasksForm.addTask(new TaskDto());
-        }
-        model.addAttribute("tasksForm", tasksForm);
+        model.addAttribute("task", new TaskDto());
         return "add-tasks";
     }
 
-    @PostMapping("{id}/save-tasks")
-    public String saveTasks(@ModelAttribute TaskListDto tasksForm, @PathVariable Long id, Model model) {
+    @PostMapping("{id}/save-task")
+    public String saveTasks(@ModelAttribute TaskDto taskDto, @PathVariable Long id, Model model) {
         Project project = projectService.findById(id)
                 .orElse(new Project());
-        projectService.addTasks(project, tasksForm.getTasks()
-                .stream()
-                .map(t -> convertTaskToEntity(t))
-                .collect(Collectors.toList()));
+        List<Task> tasksList = new ArrayList<>();
+        tasksList.add(new Task(taskDto));
+        projectService.addTasks(project, tasksList);
+
         model.addAttribute("project", project);
 
         return "redirect:/projects/" + project.getId();
-    }*/
+    }
 
     protected ProjectDto convertToDto(Project project) {
         return new ProjectDto(project);
