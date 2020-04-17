@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class ProjectDto {
 
     private Long id;
 
+    @NotBlank
     private String name;
 
     private LocalDate createdDate;
