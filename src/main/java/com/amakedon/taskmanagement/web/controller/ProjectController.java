@@ -3,11 +3,14 @@ package com.amakedon.taskmanagement.web.controller;
 import com.amakedon.taskmanagement.persistence.model.Project;
 import com.amakedon.taskmanagement.service.ProjectService;
 import com.amakedon.taskmanagement.web.dto.ProjectDto;
-import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-@RestController
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
 @RequestMapping(value = "/projects")
 public class ProjectController {
 
@@ -17,28 +20,17 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @GetMapping(path = "/{id}")
-    public ProjectDto findOne(@PathVariable Long id) {
-        Project project = projectService.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return convertToDto(project);
-    }
-
-    @PostMapping
-    public void create(@RequestBody ProjectDto projectDto) {
-        Project project = convertToEntity(projectDto);
-        projectService.save(project);
+    @GetMapping()
+    public String getProjects(Model model) {
+        Iterable<Project> projects = projectService.findAll();
+        List<ProjectDto> projectDtos = new ArrayList<>();
+        projects.forEach(p -> projectDtos.add(convertToDto(p)));
+        model.addAttribute("projects", projectDtos);
+        return "projects";
     }
 
     protected ProjectDto convertToDto(Project project) {
         return new ProjectDto(project);
-    }
-
-    protected Project convertToEntity(ProjectDto dto) {
-        Project project = new Project(dto.getName(), dto.getCreatedDate());
-        if (dto.getId() != null) {
-            project.setId(dto.getId());
-        }
-        return project;
     }
 
 }
