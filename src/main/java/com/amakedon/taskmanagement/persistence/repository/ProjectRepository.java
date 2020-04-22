@@ -13,6 +13,8 @@ public interface ProjectRepository extends PagingAndSortingRepository<Project, L
 
     Optional<Project> findByName(String name);
 
+    Iterable<Project> findByNameContaining(String name);
+
     List<Project> findByCreatedDateBetween(LocalDate start, LocalDate end);
 
 }
