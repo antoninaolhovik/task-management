@@ -1,8 +1,11 @@
 package com.amakedon.taskmanagement.web.controller;
 
+import com.amakedon.taskmanagement.events.ProjectCreatedEvent;
 import com.amakedon.taskmanagement.persistence.model.Project;
 import com.amakedon.taskmanagement.service.ProjectService;
 import com.amakedon.taskmanagement.web.dto.ProjectDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,8 +20,11 @@ public class ProjectController {
 
     private ProjectService projectService;
 
-    public ProjectController(ProjectService projectService) {
+    private ApplicationEventPublisher publisher;
+
+    public ProjectController(ProjectService projectService, ApplicationEventPublisher publisher) {
         this.projectService = projectService;
+        this.publisher = publisher;
     }
 
     @GetMapping(path = "/{id}")
@@ -47,7 +53,8 @@ public class ProjectController {
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody ProjectDto projectDto) {
         Project project = convertToEntity(projectDto);
-        projectService.save(project);
+        Project createdProject = projectService.save(project);
+        publisher.publishEvent(new ProjectCreatedEvent(createdProject.getId()));
     }
 
     @PutMapping("/{id}")
